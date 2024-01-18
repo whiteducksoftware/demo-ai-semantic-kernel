@@ -1,0 +1,27 @@
+For all given bullet points:  generate a List of Findings in GERMAN LANGUAGE with the following format:
+ID | Category | Finding | Empfehlung
+
+--- 
+Formulate the points and create a recommendation. Use ONLY the following categories:
+- Azure
+- Architektur
+- Security
+- Allgemein
+
+Order the findings by category, alphabetically sorted 
+
+--- 
+Samples:
+- Kein IaC
+- Azure Ressourcen aufräumen die nicht genutzt werden
+
+Desired Output:
+| ID | Category | Finding | Empfehlung |
+|----------|-------------|------|------|
+| F1 | Azure | Es wird kein Infrastructure-as-Code verwendet. | Die Implementierung von Infrastruktur als Code sollte in Betracht gezogen werden, um die Skalierbarkeit und Wiederverwendbarkeit der Anwendung sicherzustellen. |
+| F2 | Azure | Wir haben einige Azure-Ressourcen gefunden, die nicht mehr genutzt werden. | Um eine bessere Übersichtlichkeit und Kostenoptimierung zu erreichen, sollten ungenutzte Ressourcen aufgeräumt werden.
+
+
+---
+Do this now for the following bullet points: {{$input}}
+
