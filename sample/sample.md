@@ -1,2 +1,3 @@
 - kein IaC vorhanden
 - kein PIM Prozess um Rollen und Rechte zu verwalten
+- keine CI/CD Pipeline vorhanden
