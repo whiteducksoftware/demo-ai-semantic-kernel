@@ -18,7 +18,7 @@ kernel.ImportSemanticFunctionsFromDirectory(skillsDirectory, "Semantic");
 // import native functions
 kernel.ImportFunctions(new Plugins.Native.ParseDocuments(), "ParseDocuments");
 var planner = new SequentialPlanner(kernel);
-var plan = await planner.CreatePlanAsync("Read all content from ./sample folder. AFTER that, Create a list of findings using the FILE_CONTENT as the $input parameter");
+var plan = await planner.CreatePlanAsync("Read all content from ./sample folder. AFTER that, Create a list of findings using the file content as input");
 
 var result = await plan.InvokeAsync(kernel);
 // write the markdown output to a file
