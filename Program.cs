@@ -1,5 +1,6 @@
 ﻿using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Planners;
+using Microsoft.SemanticKernel.Planning.Handlebars;
+using Plugins.Native;
 using Spectre.Console;
 
 AnsiConsole.Write(
@@ -7,22 +8,22 @@ AnsiConsole.Write(
     .LeftJustified()
     .Color(Color.Orange3));
 
-var kernelSettings = KernelSettings.LoadSettings();
-var kernel = new KernelBuilder()
-    .WithCompletionService(kernelSettings)
-    .Build();
+// Initialize Kernel
+var settings = KernelSettings.LoadSettings();
+var kernelbuilder = Kernel
+    .CreateBuilder()
+    .AddAzureOpenAIChatCompletion(settings.DeploymentOrModelId, settings.Endpoint, settings.ApiKey);
 
-var skillsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
-kernel.ImportSemanticFunctionsFromDirectory(skillsDirectory, "Semantic");
+// Add plugins
+kernelbuilder.Plugins.AddFromType<ParseDocuments>();
+kernelbuilder.Plugins.AddFromPromptDirectory(Path.Combine("Plugins", "Prompts"));
+var kernel = kernelbuilder.Build();
 
-// import native functions
-kernel.ImportFunctions(new Plugins.Native.ParseDocuments(), "ParseDocuments");
-var planner = new SequentialPlanner(kernel);
-var plan = await planner.CreatePlanAsync("Read all content from ./sample folder. AFTER that, Create a list of findings using the file content as input");
-
+// Create a planner and execute the plan
+var planner = new HandlebarsPlanner(new HandlebarsPlannerOptions() { AllowLoops = true });
+var plan = await planner.CreatePlanAsync(kernel, "Read all content from the 'sample' folder. AFTER that, Create a list of findings using the file content as input");
 var result = await plan.InvokeAsync(kernel);
+
 // write the markdown output to a file
 File.WriteAllText("output.md", result.ToString());
-
-// result contains markdown. Write it using Spectre.Console
 Console.WriteLine(result);
