@@ -3,31 +3,27 @@ using Microsoft.SemanticKernel.Planning.Handlebars;
 using Plugins.Native;
 using Spectre.Console;
 
-
-
 AnsiConsole.Write(
     new FigletText("wd SAM Report Generator")
     .LeftJustified()
     .Color(Color.Orange3));
 
-var kernelSettings = KernelSettings.LoadSettings();
+// Initialize Kernel
+var settings = KernelSettings.LoadSettings();
+var kernelbuilder = Kernel
+    .CreateBuilder()
+    .AddAzureOpenAIChatCompletion(settings.DeploymentOrModelId, settings.Endpoint, settings.ApiKey);
 
-var kernelbuilder = Kernel.CreateBuilder().AddAzureOpenAIChatCompletion(modelId: kernelSettings.DeploymentOrModelId, apiKey: kernelSettings.ApiKey, deploymentName: kernelSettings.DeploymentOrModelId, endpoint: kernelSettings.Endpoint);
-
+// Add plugins
 kernelbuilder.Plugins.AddFromType<ParseDocuments>();
+kernelbuilder.Plugins.AddFromPromptDirectory(Path.Combine("Plugins", "Semantic"));
 var kernel = kernelbuilder.Build();
 
-var skillsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
-kernel.ImportPluginFromPromptDirectory(skillsDirectory, "Semantic");
-
+// Create a planner and execute the plan
 var planner = new HandlebarsPlanner(new HandlebarsPlannerOptions() { AllowLoops = true });
-
-var plan = await planner.CreatePlanAsync(kernel, "Read all content from ./sample folder. AFTER that, Create a list of findings using the FILE_CONTENT as the $input parameter");
-
-
+var plan = await planner.CreatePlanAsync(kernel, "Read all content from the 'sample' folder. AFTER that, Create a list of findings using the file content as input");
 var result = await plan.InvokeAsync(kernel);
+
 // write the markdown output to a file
 File.WriteAllText("output.md", result.ToString());
-
-// result contains markdown. Write it using Spectre.Console
 Console.WriteLine(result);
