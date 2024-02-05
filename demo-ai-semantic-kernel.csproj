@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Plugins\Semantic\ListOfFindings\config.json">
+    <None Update="Plugins\Prompts\ListOfFindings\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Plugins\Semantic\ListOfFindings\skprompt.txt">
+    <None Update="Plugins\Prompts\ListOfFindings\skprompt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sample\sample.md">

@@ -16,7 +16,7 @@ var kernelbuilder = Kernel
 
 // Add plugins
 kernelbuilder.Plugins.AddFromType<ParseDocuments>();
-kernelbuilder.Plugins.AddFromPromptDirectory(Path.Combine("Plugins", "Semantic"));
+kernelbuilder.Plugins.AddFromPromptDirectory(Path.Combine("Plugins", "Prompts"));
 var kernel = kernelbuilder.Build();
 
 // Create a planner and execute the plan
