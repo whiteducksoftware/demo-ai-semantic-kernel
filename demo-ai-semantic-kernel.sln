@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demo-ai-semantic-kernel", "demo-ai-semantic-kernel.csproj", "{5212A7D7-3441-49CD-90C5-F32967417DFD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D555ACE2-0831-49A2-830F-2782519271EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rag-ai-search", "src\rag-ai-search\rag-ai-search.csproj", "{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sam-report-generator", "src\sam-report-generator\sam-report-generator.csproj", "{CC5A49ED-8117-4FE5-87B1-734131436FDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5212A7D7-3441-49CD-90C5-F32967417DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5212A7D7-3441-49CD-90C5-F32967417DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5212A7D7-3441-49CD-90C5-F32967417DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5212A7D7-3441-49CD-90C5-F32967417DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5A49ED-8117-4FE5-87B1-734131436FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5A49ED-8117-4FE5-87B1-734131436FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5A49ED-8117-4FE5-87B1-734131436FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5A49ED-8117-4FE5-87B1-734131436FDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F14212F1-D1CD-46DC-BEE4-5DE7FECD48A9} = {D555ACE2-0831-49A2-830F-2782519271EB}
+		{CC5A49ED-8117-4FE5-87B1-734131436FDF} = {D555ACE2-0831-49A2-830F-2782519271EB}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {65A8BAC6-90D7-4C98-A4BE-AA9A557A2690}
+		SolutionGuid = {860FF6A5-968B-45B5-BF71-A6A795CA9A8C}
 	EndGlobalSection
 EndGlobal
