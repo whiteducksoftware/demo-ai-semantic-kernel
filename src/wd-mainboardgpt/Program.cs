@@ -106,12 +106,12 @@ async Task UsePlanner()
         .SpinnerStyle(Style.Parse("orange1"))
         .StartAsync("[orange1]Generating plan ... [/]", async ctx =>
         {
-            plan = await planner.CreatePlanAsync(kernel, $"Retrieve information about the ${{{model}}} motherboard's memory support. Then answer me the question, whether I can install 64GB DDR4 RAM on it");
+            plan = await planner.CreatePlanAsync(kernel, $"Retrieve information about the ${{{model}}} motherboard's memory support. AFTER that, answer me the question, whether I can install 64GB DDR4 RAM on it. Only use existing Plugins.");
         });
 
     var table = new Table();
     table.AddColumn("Generated Plan:");
-    table.AddRow(plan.ToString());
+    table.AddRow(plan?.ToString() ?? "No plan generated");
     AnsiConsole.Write(table);
 
     string? result = null;
@@ -122,7 +122,10 @@ async Task UsePlanner()
         .SpinnerStyle(Style.Parse("orange1"))
         .StartAsync("[orange1]Executing plan ... [/]", async ctx =>
         {
-            result = await plan.InvokeAsync(kernel);
+            if (plan != null)
+            {
+                result = await plan.InvokeAsync(kernel);
+            }
         });
 
     table = new Table();

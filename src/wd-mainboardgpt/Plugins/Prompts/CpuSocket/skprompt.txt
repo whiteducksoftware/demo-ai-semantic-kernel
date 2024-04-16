@@ -1,3 +1,3 @@
-{{search 'What is the motherboards type of CPU socket? Which CPU models are supported?' collection=$model}} 
+{{Search 'What is the motherboards type of CPU socket? Which CPU models are supported?' collection=$model}} 
 
 What is the motherboards type of CPU socket? Which CPU models are supported?
