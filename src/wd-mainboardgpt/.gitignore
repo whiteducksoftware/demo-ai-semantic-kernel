@@ -484,4 +484,5 @@ $RECYCLE.BIN/
 *.swp
 
 # Output files
-/output
+/output/*
+!/output/.gitkeep
