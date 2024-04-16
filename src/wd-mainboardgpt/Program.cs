@@ -2,13 +2,19 @@
 using Azure.Search.Documents.Indexes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
-
+using Microsoft.SemanticKernel.Planning.Handlebars;
 using Spectre.Console;
 
 AnsiConsole.Write(
     new FigletText("white duck mainboardGPT")
     .LeftJustified()
     .Color(Color.Orange3));
+
+var mode = AnsiConsole.Prompt(
+    new SelectionPrompt<string>()
+        .Title("Please select the mode:")
+        .HighlightStyle(new Style().Foreground(Color.Orange1))
+        .AddChoices(new[] { "Discrete Prompts", "Planner" }));
 
 var model = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
@@ -43,36 +49,84 @@ kernelbuilder.Plugins.AddFromType<AzureAISearchPlugin>();
 var kernel = kernelbuilder.Build();
 var prompts = kernel.ImportPluginFromPromptDirectory(@"./Plugins/Prompts");
 
-var resultsByPrompt = new Dictionary<KernelFunction, Task<FunctionResult>>();
-
-await AnsiConsole.Status()
-    .AutoRefresh(true)
-    .Spinner(Spinner.Known.Default)
-    .SpinnerStyle(Style.Parse("orange1"))
-    .StartAsync("[orange1]Thinking...[/]", async ctx =>
-    {
-        foreach (var p in prompts)
-        {
-            resultsByPrompt[p] = kernel.InvokeAsync(p, variables);
-        }
-
-        await Task.WhenAll(resultsByPrompt.Values);
-    });
-
-// Create a table
-var table = new Table();
-
-// Add some columns
-foreach (var kvp in resultsByPrompt)
+switch (mode)
 {
-    table.AddColumn(kvp.Key.Name);
+    case "Discrete Prompts":
+        await UseDiscretePrompts();
+        break;
+    case "Planner":
+        await UsePlanner();
+        break;
 }
 
-table.AddRow(resultsByPrompt.Values.Select(t => t.Result.ToString()).ToArray());
+async Task UseDiscretePrompts()
+{
+    var resultsByPrompt = new Dictionary<KernelFunction, FunctionResult>();
 
-// Render the table to the console
-AnsiConsole.Write(table);
+    await AnsiConsole.Status()
+        .AutoRefresh(true)
+        .Spinner(Spinner.Known.Default)
+        .SpinnerStyle(Style.Parse("orange1"))
+        .StartAsync($"[orange1]Executing {prompts!.Count()} prompts ... [/]", async ctx =>
+        {
+            foreach (var p in prompts)
+            {
+                AnsiConsole.MarkupLine($"[grey]LOG:[/] Retrieving {p.Name}[grey]...[/]");
+                resultsByPrompt[p] = await kernel!.InvokeAsync(p, variables);
+            }
+        });
 
-DumpOutput.Dump($"./output/{model}.md",
-    resultsByPrompt.Select(kvp => Tuple.Create(kvp.Key.Name, kvp.Value.Result.ToString())).ToList());
+    // Create a table
+    var table = new Table();
 
+    // Add some columns
+    foreach (var kvp in resultsByPrompt)
+    {
+        table.AddColumn(kvp.Key.Name);
+    }
+
+    table.AddRow(resultsByPrompt.Values.Select(t => t.ToString()).ToArray());
+
+    // Render the table to the console
+    AnsiConsole.Write(table);
+
+    DumpOutput.Dump($"./output/{model}.md",
+        resultsByPrompt.Select(kvp => Tuple.Create(kvp.Key.Name, kvp.Value.ToString())).ToList());
+}
+
+async Task UsePlanner()
+{
+    var planner = new HandlebarsPlanner(new HandlebarsPlannerOptions() { AllowLoops = true });
+
+    HandlebarsPlan? plan = null;
+
+    await AnsiConsole.Status()
+        .AutoRefresh(true)
+        .Spinner(Spinner.Known.Default)
+        .SpinnerStyle(Style.Parse("orange1"))
+        .StartAsync("[orange1]Generating plan ... [/]", async ctx =>
+        {
+            plan = await planner.CreatePlanAsync(kernel, $"Retrieve information about the ${{{model}}} motherboard's memory support. Then answer me the question, whether I can install 64GB DDR4 RAM on it");
+        });
+
+    var table = new Table();
+    table.AddColumn("Generated Plan:");
+    table.AddRow(plan.ToString());
+    AnsiConsole.Write(table);
+
+    string? result = null;
+
+    await AnsiConsole.Status()
+        .AutoRefresh(true)
+        .Spinner(Spinner.Known.Default)
+        .SpinnerStyle(Style.Parse("orange1"))
+        .StartAsync("[orange1]Executing plan ... [/]", async ctx =>
+        {
+            result = await plan.InvokeAsync(kernel);
+        });
+
+    table = new Table();
+    table.AddColumn("Plan execution result:");
+    table.AddRow(Markup.Escape(result!));
+    AnsiConsole.Write(table);
+}

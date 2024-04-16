@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Embeddings;
 
@@ -16,8 +17,8 @@ sealed class AzureAISearchPlugin
 
     [KernelFunction("Search")]
     public async Task<string> SearchAsync(
-        string query,
-        string collection,
+        [Description("The search query")]string query,
+        [Description("The index to search")]string collection,
         List<string>? searchFields = null,
         CancellationToken cancellationToken = default)
     {
