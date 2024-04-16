@@ -106,7 +106,7 @@ async Task UsePlanner()
         .SpinnerStyle(Style.Parse("orange1"))
         .StartAsync("[orange1]Generating plan ... [/]", async ctx =>
         {
-            plan = await planner.CreatePlanAsync(kernel, $"Retrieve information about the ${{{model}}} motherboard's memory support. AFTER that, answer me the question, whether I can install 64GB DDR4 RAM on it. Only use existing Plugins.");
+            plan = await planner.CreatePlanAsync(kernel, $"Retrieve information about the ${{{model}}} motherboard's memory support. AFTER that, answer me the question, whether I can install 64GB DDR4 RAM on it an EXPLAIN WHY. Only use existing Plugins.");
         });
 
     var table = new Table();
