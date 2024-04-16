@@ -1,0 +1,3 @@
+{{search 'Specification USB' collection=$model}} 
+
+HOw many USB ports or intzernal USB headers does the motherboard have? Which types of USB are supported? 

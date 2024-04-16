@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Whiteduck.MainboardGptDemo</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>cbf7787d-d2d1-40be-95fe-84a6d3ba6a35</UserSecretsId>
+    <NoWarn>SKEXP0003, SKEXP0004, SKEXP0011, SKEXP0052, SKEXP0060, SKEXP0010, SKEXP0020,
+      SKEXP0001,SKEXP0050</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version=" 1.7.1" />
+    <PackageReference Include="Microsoft.SemanticKernel.Planners.Handlebars" Version="1.1.0-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.7.1-alpha" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureAISearch" Version="1.7.1-alpha" />
+    <PackageReference Include="Spectre.Console" Version="0.47.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Plugins\Prompts\ListOfFindings\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins\Prompts\ListOfFindings\skprompt.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sample\sample.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Plugins\ExamplePrompts\" />
+    <Folder Include="Plugins\Prompts\CpuSocket\" />
+    <Folder Include="Plugins\Prompts\PciSlots\" />
+    <Folder Include="Plugins\Prompts\Ram\" />
+    <Folder Include="Plugins\Prompts\SataPorts\" />
+    <Folder Include="Plugins\Prompts\UsbCapabilities\" />
+    <Folder Include="Plugins\Prompts\_old\" />
+  </ItemGroup>
+
+</Project>

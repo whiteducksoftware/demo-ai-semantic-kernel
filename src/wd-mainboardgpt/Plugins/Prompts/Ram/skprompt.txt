@@ -1,0 +1,3 @@
+{{search 'Specification RAM Memory Capacity DIMM Dual Channel Quad Channel' collection=$model}} 
+
+How much Memory or RAM or DIMM does the motherboard support, at which speeds or clock rates?

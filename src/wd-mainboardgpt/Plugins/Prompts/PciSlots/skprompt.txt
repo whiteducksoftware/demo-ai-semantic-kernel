@@ -1,0 +1,3 @@
+{{search 'Specification PCI PCIE PCI Express' collection=$model}} 
+
+How many PCI slots does the motherboard have, and which types?

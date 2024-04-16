@@ -1,0 +1,3 @@
+{{search 'M.2 support; NVME' collection=$model}} 
+
+How many M.2 slots does the motherboard have? Which M.2 types are supported? Which M.2 sizes are supported?

@@ -1,0 +1,3 @@
+{{search 'IDE support' collection=$model}} 
+
+How many and which types of IDE drives does the motherboard support?

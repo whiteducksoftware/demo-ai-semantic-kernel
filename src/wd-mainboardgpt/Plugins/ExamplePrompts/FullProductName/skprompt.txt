@@ -1,0 +1,3 @@
+{{search 'Manufacturer and Product' collection=$model}} 
+
+What is the manufactirers full name and the models full name, and the year of release? Answer in a format like "Asus Rog Strix (2020)".
