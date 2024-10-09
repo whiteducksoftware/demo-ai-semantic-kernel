@@ -7,17 +7,14 @@ from semantic_kernel.contents.utils.author_role import AuthorRole
 from seo_boost_agent import SeoBoostAgent
 from social_craft_agent import SocialCraftAgent
 
-
 class ApprovalTerminationStrategy(TerminationStrategy):
     async def should_agent_terminate(self, agent, history):
         return "approved" in history[-1].content.lower()
-
 
 async def main():
 
     agent_seo = SeoBoostAgent.create()
     agent_social = SocialCraftAgent.create()
-
 
     chat = AgentGroupChat(
         agents=[agent_seo, agent_social],
@@ -25,15 +22,13 @@ async def main():
     )
 
     with open('blog.md', 'r',  encoding='utf-8') as file:
-        data = file.read().replace('\n', '')
+        blog_content = file.read().replace('\n', '')
 
-    input = f"Create a social media for the given blog post '{data}'"
-
+    input = f"Create a social media post for the given blog content '{blog_content}'"
     await chat.add_chat_message(ChatMessageContent(role=AuthorRole.USER, content=input))
-    # print(f"# {AuthorRole.USER}: '{input}'")
 
     async for content in chat.invoke():
-        print(f"# {content.role} - {content.name or '*'}: '{content.content}'")
+        print(f"\033[91m{content.role} - {content.name or '*'}\033[0m: '{content.content}'")
         print('_' * 10) 
 
     print(f"# IS COMPLETE: {chat.is_complete}")
