@@ -1,0 +1,15 @@
+apiVersion: kaito.sh/v1alpha1
+kind: Workspace
+metadata:
+  name: workspace-falcon-7b-instruct
+  annotations:
+    kaito.sh/enablelb: "False"
+resource:
+  count: 1
+  instanceType: "Standard_NC12s_v3"
+  labelSelector:
+    matchLabels:
+      apps: falcon-7b-instruct
+inference:
+  preset:
+    name: "falcon-7b-instruct"
