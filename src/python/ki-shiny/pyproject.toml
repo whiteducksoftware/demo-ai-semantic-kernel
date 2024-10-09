@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "whiteduck project"
+version = "0.1.0"
+description = ""
+authors = ["andre.ratzenberger@whiteduck.de"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10,<3.13"
+shiny = "*"
+shinyswatch = "*"
+shiny-validate = "*"
+shinywidgets = "*"
+shinylive = "*"
+loguru = "*"
+pendulum = "*"
+python-decouple = "*"
+pandas = "*"
+semantic-kernel = { extras = ["all"], version = "^1.11.0" }
+
+[tool.poetry.group.dev.dependencies]
+ruff = "*"
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
+ignore = ["E203", "E266", "E501"]
+exclude = ["logs/", "data/", "tests/", "docs/"]

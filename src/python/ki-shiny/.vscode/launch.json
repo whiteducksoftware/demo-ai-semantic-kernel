@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug HOT RELOAD",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "shiny",
+      "args": ["run", "${workspaceFolder}/app.py", "--reload"],
+      "justMyCode": false,
+    },
+    {
+      "name": "Debug NO HOT RELOAD",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "shiny",
+      "args": ["run", "${workspaceFolder}/app.py"],
+      "justMyCode": false,
+    }
+  ]
+}
