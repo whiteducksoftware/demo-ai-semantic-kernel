@@ -1,1 +1,0 @@
-shiny run ./app.py
