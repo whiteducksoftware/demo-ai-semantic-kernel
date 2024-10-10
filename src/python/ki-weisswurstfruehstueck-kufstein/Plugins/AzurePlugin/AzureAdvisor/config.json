@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Determine whether Kubernetes is a appropriate platform for the specified project",
+  "description": "Recommend the best Azure compute service based on project requirements",
   "execution_settings": {
     "default": {
       "max_tokens": 1000,
@@ -13,7 +13,7 @@
   "input_variables": [
     {
       "name": "input",
-      "description": "The project description",
+      "description": "The project requirements",
       "default": ""
     }
   ]

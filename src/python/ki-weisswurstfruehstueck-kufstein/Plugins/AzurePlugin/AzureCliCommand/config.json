@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Turns natural language into kubectl commands like a kubectl Copilot",
+  "description": "Transforms natural language into Azure CLI commands, functioning like an Azure Copilot",
   "execution_settings": {
     "default": {
       "max_tokens": 1000,
@@ -13,7 +13,7 @@
   "input_variables": [
     {
       "name": "input",
-      "description": "The natural language input to be converted into kubectl commands",
+      "description": "The natural language input to be converted into Azure CLI commands",
       "default": ""
     }
   ]
