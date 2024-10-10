@@ -1,0 +1,20 @@
+controller:
+  env:
+  - name: ARM_SUBSCRIPTION_ID
+    value: 8be8c704-a30b-4517-92b1-542991a4d11a
+  - name: LOCATION
+    value: northeurope
+  - name: AZURE_CLUSTER_NAME
+    value: aks-kcd-kaito
+  - name: AZURE_NODE_RESOURCE_GROUP
+    value: MC_rg-kcd-kaito_aks-kcd-kaito_northeurope
+  - name: ARM_RESOURCE_GROUP
+    value: rg-kcd-kaito
+  - name: LEADER_ELECT
+    value: "false"
+workloadIdentity:
+  clientId: a1f71b63-48e1-4363-a4a7-db798efa7abc
+  tenantId: f1847c27-90be-4b38-a1b7-bd3a2029122f
+settings:
+  azure:
+    clusterName: aks-kcd-kaito

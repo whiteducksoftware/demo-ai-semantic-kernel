@@ -1,3 +1,0 @@
-{{search 'Specification sATA support' collection=$model}} 
-
-How many and which types of sATA ports does the motherboard have?

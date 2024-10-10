@@ -1,0 +1,39 @@
+import asyncio
+import os
+
+from semantic_kernel.agents import AgentGroupChat
+from semantic_kernel.agents.strategies.termination.termination_strategy import TerminationStrategy
+from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents.utils.author_role import AuthorRole
+from seo_boost_agent import SeoBoostAgent
+from social_craft_agent import SocialCraftAgent
+
+class ApprovalTerminationStrategy(TerminationStrategy):
+    async def should_agent_terminate(self, agent, history):
+        return "approved" in history[-1].content.lower()
+
+async def main():
+
+    agent_seo = SeoBoostAgent.create()
+    agent_social = SocialCraftAgent.create()
+
+    chat = AgentGroupChat(
+        agents=[agent_social, agent_seo],
+        termination_strategy=ApprovalTerminationStrategy(agents=[agent_seo], maximum_iterations=15),
+    )
+
+    with open('blog.md', 'r',  encoding='utf-8') as file:
+        blog_content = file.read().replace('\n', '')
+
+    input = f"Create a social media post for the given blog content '{blog_content}'"
+    await chat.add_chat_message(ChatMessageContent(role=AuthorRole.USER, content=input))
+
+    async for content in chat.invoke():
+        print(f"\033[91m{content.name}:\033[0m")
+        print(content.content)
+        print('_' * os.get_terminal_size().columns) 
+
+    print(f"# IS COMPLETE: {chat.is_complete}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
